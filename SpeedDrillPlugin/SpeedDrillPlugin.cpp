@@ -1,5 +1,5 @@
 #include "SpeedDrillPlugin.h"
-#include "bakkesmod\wrappers\includes.h"
+#include "bakkesmod/wrappers/includes.h"
 #include "utils/parser.h"
 #include <stdio.h>
 
@@ -24,7 +24,7 @@ void SpeedDrillPlugin::OnHitBall(std::string eventName) {
     hits.lastHitTime = tutorial.GetSecondsElapsed();
     auto hitDiff = hits.lastHitTime - prevHitTime;
     hits.numHits++;
-    hits.avgHitTime = ((hits.avgHitTime * (hits.numHits - 1)) + hitDiff) / hits.numHits
+    hits.avgHitTime = ((hits.avgHitTime * (hits.numHits - 1)) + hitDiff) / hits.numHits;
   }, 0.2f);
 }
 
@@ -36,9 +36,10 @@ void SpeedDrillPlugin::Render(CanvasWrapper canvas) {
     return;
 
   auto currentTime = tutorial.GetSecondsElapsed();
-  hitDiff = currentTime - hits.lastHitTime
-  char buffer [50]
-  sprintf(buffer, "%0.2f (Average: %0.2f)", hitDiff, hits.avgHitTime)
+  auto hitDiff = currentTime - hits.lastHitTime;
+  char buffer [50];
+  sprintf(buffer, "%0.2f (Average: %0.2f)", hitDiff, hits.avgHitTime);
+  std::string text = buffer;
   Vector2 drawLoc = { 0, 0 };
   canvas.SetPosition(drawLoc);
   canvas.SetColor(255, 255, 255, 255);
