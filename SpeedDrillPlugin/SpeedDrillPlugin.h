@@ -2,20 +2,20 @@
 #pragma comment( lib, "bakkesmod.lib" )
 #include "bakkesmod/plugin/bakkesmodplugin.h"
 
-struct Popup
+struct Hits
 {
-	float startTime = 0.f;
-	std::string text = "";
-	Vector2 startLocation = { -1, -1 };
+	float lastHitTime = 0.f;
+  float avgHitTime = 0.f;
+  int numHits = 0;
 };
 
 class SpeedDrillPlugin : public BakkesMod::Plugin::BakkesModPlugin
 {
 public:
-	std::vector<Popup> popups;
+	Hits hits;
 	virtual void onLoad();
 	virtual void onUnload();
-	void OnHitBallPre(CarWrapper cw, void* params, std::string eventName);
+	/* void OnHitBallPre(CarWrapper cw, void* params, std::string eventName); */
 	void OnHitBall(std::string eventName);
 	void Render(CanvasWrapper canvas);
 };
