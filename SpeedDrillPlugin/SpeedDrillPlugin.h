@@ -19,4 +19,3 @@ public:
 	void OnHitBall(std::string eventName);
 	void Render(CanvasWrapper canvas);
 };
-

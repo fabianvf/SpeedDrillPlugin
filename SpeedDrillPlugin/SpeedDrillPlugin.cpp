@@ -38,7 +38,7 @@ void SpeedDrillPlugin::Render(CanvasWrapper canvas) {
   auto currentTime = tutorial.GetSecondsElapsed();
   auto hitDiff = currentTime - hits.lastHitTime;
   char buffer [50];
-  sprintf(buffer, "%0.2f (Average: %0.2f)", hitDiff, hits.avgHitTime);
+  sprintf_s(buffer, "%0.2f (Average: %0.2f)", hitDiff, hits.avgHitTime);
   std::string text = buffer;
   Vector2 drawLoc = { 0, 0 };
   canvas.SetPosition(drawLoc);
