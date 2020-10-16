@@ -113,7 +113,7 @@
       <AdditionalIncludeDirectories>C:\Users\fabia\source\repos\BakkesModSDK\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>C:\Users\fabia\source\repos\BakkesModSDK\lib\bakkesmod.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\Users\fabia\source\repos\BakkesModSDK\lib\bakkesmod.lib;C:\Users\fabia\source\repos\BakkesModSDK\lib\pluginsdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -121,6 +121,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="speeddrillplugin\SpeedDrillPlugin.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SpeedDrillPlugin.set" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,10 @@
 Speed Drill Plugin
 9|This plugin will count the seconds between ball hits
-1|Display time since last hit  |cl_speeddrill_display_ballhit_timer
+1|Display time since last hit |cl_speeddrill_display_ballhit_timer
+8|
+12|Number of seconds before timer turns yellow |cl_speeddrill_yellow_threshold
+12|Number of seconds before timer turns red |cl_speeddrill_red_threshold
+12|Minimum amount of time (in seconds) before a touch will reset the timer |cl_speeddrill_minimum_hit_time
 8|
 9|Ball Timer display position
 5|Ball Timer Position X|cl_speeddrill_display_ballhit_timer_x|0|3840

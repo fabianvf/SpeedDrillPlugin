@@ -5,6 +5,7 @@
 struct Hits
 {
   float lastHitTime = 0.f;
+  float lastTouchTime = 0.f;
   float avgHitTime = 0.f;
   int numHits = 0;
 };
