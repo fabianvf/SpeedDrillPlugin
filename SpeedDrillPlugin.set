@@ -1,2 +1,15 @@
 Speed Drill Plugin
 9|This plugin will count the seconds between ball hits
+1|Display time since last hit  |cl_speeddrill_display_ballhit_timer
+8|
+9|Ball Timer display position
+5|Ball Timer Position X|cl_speeddrill_display_ballhit_timer_x|0|3840
+5|Ball Timer Position Y|cl_speeddrill_display_ballhit_timer_y|0|2160
+5|Ball Timer display scale|cl_speeddrill_display_ballhit_timer_size|1|10
+8|
+1|Display total session time  |cl_speeddrill_display_session_timer
+8|
+9|Session Timer display position
+5|Session Timer Position X|cl_speeddrill_display_session_timer_x|0|3840
+5|Session Timer Position Y|cl_speeddrill_display_session_timer_y|0|2160
+5|Session Timer display scale|cl_speeddrill_display_session_timer_size|1|10
