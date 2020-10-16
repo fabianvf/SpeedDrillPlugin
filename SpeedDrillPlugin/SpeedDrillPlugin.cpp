@@ -13,6 +13,7 @@ void SpeedDrillPlugin::onLoad() {
 void SpeedDrillPlugin::onUnload() {
 }
 
+
 void SpeedDrillPlugin::OnHitBall(std::string eventName) {
   if (!gameWrapper->IsInGame())
     return;
@@ -38,10 +39,20 @@ void SpeedDrillPlugin::Render(CanvasWrapper canvas) {
   auto currentTime = tutorial.GetSecondsElapsed();
   auto hitDiff = currentTime - hits.lastHitTime;
   char buffer [50];
-  sprintf_s(buffer, "%0.2f (Average: %0.2f)", hitDiff, hits.avgHitTime);
+  sprintf_s(buffer, "%0.2f", hitDiff);
   std::string text = buffer;
-  Vector2 drawLoc = { 0, 0 };
+  Vector2 screenSize = gameWrapper->GetScreenSize();
+  Vector2F stringSize = canvas.GetStringSize(text);
+  Vector2 drawLoc = { screenSize.X/2 - (int)stringSize.X/2, screenSize.Y - ((int)stringSize.Y/2)*10 };
   canvas.SetPosition(drawLoc);
-  canvas.SetColor(255, 255, 255, 255);
+  if (hitDiff < 2.0) {
+      canvas.SetColor(0, 230, 64, 255);
+  }
+  else if (hitDiff < 3.0) {
+      canvas.SetColor(240, 255, 0, 255);
+  }
+  else {
+      canvas.SetColor(207, 0, 15, 255);
+  }
   canvas.DrawString(text, 3, 3);
 }

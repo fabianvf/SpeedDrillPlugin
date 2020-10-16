@@ -1,22 +1,2 @@
 Speed Drill Plugin
 9|This plugin will count the seconds between ball hits
-1|Display stats on screen |cl_speed_drill_plugin_display
-8|
-9|Time display position
-10|cl_speed_drill_plugin_display
-5|X|cl_speed_drill_plugin_display_x|0|3840
-5|Y|cl_speed_drill_plugin_display_y|0|2160
-11|
-8|
-13|Background color|cl_speed_drill_plugin_background_color
-13|Title color|cl_speed_drill_plugin_title_color
-13|Label color|cl_speed_drill_plugin_label_color
-13|Positive color|cl_speed_drill_plugin_positive_color
-13|Negative color|cl_speed_drill_plugin_negative_color
-0|Reset colors|cl_speed_drill_plugin_reset_colors
-8|
-9|Stat Outputter
-9|Checking this checkbox will output your ball hit times to <BakkesModFolder>/data/SpeedDrillPlugin
-1|Output stats to csv file|cl_speed_drill_plugin_output_stats
-8|
-0|Reset stats|cl_speed_drill_plugin_reset
