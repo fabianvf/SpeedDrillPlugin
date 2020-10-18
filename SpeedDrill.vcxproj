@@ -115,6 +115,12 @@
     <Link>
       <AdditionalDependencies>C:\Users\fabia\source\repos\BakkesModSDK\lib\bakkesmod.lib;C:\Users\fabia\source\repos\BakkesModSDK\lib\pluginsdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy x64\Release\SpeedDrill.dll SpeedDrillPlugin-BUILT\plugins\SpeedDrill.dll
+copy SpeedDrillPlugin.set SpeedDrillPlugin-BUILT\plugins\settings\SpeedDrillPlugin.set
+del /f SpeedDrillPlugin-BUILT\SpeedDrillPlugin-BUILT.zip
+cd SpeedDrillPlugin-BUILT &amp;&amp; tar.exe -a -c -f SpeedDrillPlugin-BUILT.zip plugins cfg</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="speeddrillplugin\SpeedDrillPlugin.cpp" />
