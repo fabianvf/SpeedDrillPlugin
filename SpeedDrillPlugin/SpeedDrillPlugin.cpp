@@ -3,7 +3,7 @@
 #include "utils/parser.h"
 #include <stdio.h>
 
-BAKKESMOD_PLUGIN(SpeedDrillPlugin, "Speed Drill plugin", "0.3", PLUGINTYPE_FREEPLAY | PLUGINTYPE_CUSTOM_TRAINING)
+BAKKESMOD_PLUGIN(SpeedDrillPlugin, "Speed Drill plugin", "0.4", PLUGINTYPE_FREEPLAY | PLUGINTYPE_CUSTOM_TRAINING)
 
 void SpeedDrillPlugin::onLoad() {
   std::stringstream ss;
@@ -96,7 +96,6 @@ void SpeedDrillPlugin::Render(CanvasWrapper canvas) {
         canvas.SetColor(255, 255, 255, 255);
         Vector2 drawLoc2 = { cvarManager->getCvar("cl_speeddrill_display_session_timer_x").getIntValue(), cvarManager->getCvar("cl_speeddrill_display_session_timer_y").getIntValue() };
         int n = (int)currentTime;
-        n = n % (24 * 3600);
         n %= 3600;
         int minutes = n / 60;
 
