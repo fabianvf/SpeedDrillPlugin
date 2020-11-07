@@ -3,7 +3,7 @@
 #include "utils/parser.h"
 #include <stdio.h>
 
-BAKKESMOD_PLUGIN(SpeedDrillPlugin, "Speed Drill plugin", "0.4", PLUGINTYPE_FREEPLAY | PLUGINTYPE_CUSTOM_TRAINING)
+BAKKESMOD_PLUGIN(SpeedDrillPlugin, "Speed Drill plugin", "0.5", PLUGINTYPE_FREEPLAY | PLUGINTYPE_CUSTOM_TRAINING)
 
 void SpeedDrillPlugin::onLoad() {
   std::stringstream ss;
