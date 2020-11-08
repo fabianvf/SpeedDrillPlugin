@@ -3,20 +3,20 @@
 #include "utils/parser.h"
 #include <stdio.h>
 
-BAKKESMOD_PLUGIN(SpeedDrillPlugin, "Speed Drill plugin", "0.5", PLUGINTYPE_FREEPLAY | PLUGINTYPE_CUSTOM_TRAINING)
+BAKKESMOD_PLUGIN(SpeedDrillPlugin, "Speed Drill plugin", "0.6", PLUGINTYPE_FREEPLAY | PLUGINTYPE_CUSTOM_TRAINING)
 
 void SpeedDrillPlugin::onLoad() {
   std::stringstream ss;
   ss << exports.pluginName << " version: " << exports.pluginVersion;
   cvarManager->log(ss.str());
   cvarManager->registerCvar("cl_speeddrill_display_ballhit_timer", "1", "Display time since last ball hit", true, true, 0, true, 1, true);
-  cvarManager->registerCvar("cl_speeddrill_display_ballhit_timer_x", "420", "X position of the ball hit timer display", true, true, 0, true, 3840, true);
-  cvarManager->registerCvar("cl_speeddrill_display_ballhit_timer_y", "420", "Y position of the ball hit timer display", true, true, 0, true, 2160, true);
+  cvarManager->registerCvar("cl_speeddrill_display_ballhit_timer_x", "-1", "X position of the ball hit timer display", true, true, -1, true, 3840, true);
+  cvarManager->registerCvar("cl_speeddrill_display_ballhit_timer_y", "-1", "Y position of the ball hit timer display", true, true, -1, true, 2160, true);
   cvarManager->registerCvar("cl_speeddrill_display_ballhit_timer_size", "3", "Scale of the ball hit timer display", true, true, 1, true, 10, true);
 
   cvarManager->registerCvar("cl_speeddrill_display_session_timer", "1", "Display running time of freeplay session", true, true, 0, true, 1, true);
-  cvarManager->registerCvar("cl_speeddrill_display_session_timer_x", "420", "X position of the session timer display", true, true, 0, true, 3840, true);
-  cvarManager->registerCvar("cl_speeddrill_display_session_timer_y", "0", "Y position of the session timer display", true, true, 0, true, 2160, true);
+  cvarManager->registerCvar("cl_speeddrill_display_session_timer_x", "-1", "X position of the session timer display", true, true, -1, true, 3840, true);
+  cvarManager->registerCvar("cl_speeddrill_display_session_timer_y", "-1", "Y position of the session timer display", true, true, -1, true, 2160, true);
   cvarManager->registerCvar("cl_speeddrill_display_session_timer_size", "3", "Scale of the session timer display", true, true, 1, true, 10, true);
 
   cvarManager->registerCvar("cl_speeddrill_yellow_threshold", "2", "Threshold at which the timer turns yellow", true, true, 0, false, 0, true);
@@ -65,9 +65,10 @@ void SpeedDrillPlugin::Render(CanvasWrapper canvas) {
     bool renderBallTimer = cvarManager->getCvar("cl_speeddrill_display_ballhit_timer").getBoolValue();
     bool renderSessionTimer = cvarManager->getCvar("cl_speeddrill_display_session_timer").getBoolValue();
 
+    Vector2 screenSize = gameWrapper->GetScreenSize();
     auto currentTime = tutorial.GetSecondsElapsed();
     if (renderBallTimer) {
-        Vector2 drawLoc = { cvarManager->getCvar("cl_speeddrill_display_ballhit_timer_x").getIntValue(), cvarManager->getCvar("cl_speeddrill_display_ballhit_timer_y").getIntValue() };
+        
         auto hitDiff = currentTime - hits.lastHitTime;
         if (hitDiff < 0) {
             hitDiff = 0;
@@ -75,7 +76,19 @@ void SpeedDrillPlugin::Render(CanvasWrapper canvas) {
         char buffer[50];
         sprintf_s(buffer, "%0.2f", hitDiff);
         std::string text = buffer;
-        Vector2F stringSize = canvas.GetStringSize(text);
+        auto scale = cvarManager->getCvar("cl_speeddrill_display_ballhit_timer_size").getFloatValue();
+
+        auto x = cvarManager->getCvar("cl_speeddrill_display_ballhit_timer_x").getIntValue();
+        auto y = cvarManager->getCvar("cl_speeddrill_display_ballhit_timer_y").getIntValue();
+        if (x < 0) {
+            Vector2F stringSize = canvas.GetStringSize(text, scale);
+            x = screenSize.X / 2 - (int)stringSize.X / 2;
+        }
+        if (y < 0) {
+            Vector2F stringSize = canvas.GetStringSize(text, scale);
+            y = screenSize.Y - ((int)stringSize.Y / 2) * 10;
+        }
+        Vector2 drawLoc = { x, y };
         canvas.SetPosition(drawLoc);
         float yellowThreshold = cvarManager->getCvar("cl_speeddrill_yellow_threshold").getFloatValue();
         float redThreshold = cvarManager->getCvar("cl_speeddrill_red_threshold").getFloatValue();
@@ -89,12 +102,10 @@ void SpeedDrillPlugin::Render(CanvasWrapper canvas) {
         else {
             canvas.SetColor(207, 0, 15, 255);
         }
-        auto scale = cvarManager->getCvar("cl_speeddrill_display_ballhit_timer_size").getFloatValue();
         canvas.DrawString(text, scale, scale);
     }
     if (renderSessionTimer) {
         canvas.SetColor(255, 255, 255, 255);
-        Vector2 drawLoc2 = { cvarManager->getCvar("cl_speeddrill_display_session_timer_x").getIntValue(), cvarManager->getCvar("cl_speeddrill_display_session_timer_y").getIntValue() };
         int n = (int)currentTime;
         n %= 3600;
         int minutes = n / 60;
@@ -105,9 +116,21 @@ void SpeedDrillPlugin::Render(CanvasWrapper canvas) {
         char buffer2[50];
         sprintf_s(buffer2, "%dm%ds", minutes, seconds);
         std::string text2 = buffer2;
+        auto x2 = cvarManager->getCvar("cl_speeddrill_display_session_timer_x").getIntValue();
+        auto y2 = cvarManager->getCvar("cl_speeddrill_display_session_timer_y").getIntValue();
+        auto scale2 = cvarManager->getCvar("cl_speeddrill_display_session_timer_size").getFloatValue();
+        if (x2 < 0) {
+            Vector2F stringSize = canvas.GetStringSize(text2, scale2);
+            x2 = screenSize.X / 2 - (int)stringSize.X / 2;
+        }
+        if (y2 < 0) {
+            Vector2F stringSize = canvas.GetStringSize(text2, scale2);
+            y2 = ((int)stringSize.Y / 2) * 10;
+        }
+        Vector2 drawLoc2 = { x2, y2 };
+        
         Vector2F stringSize2 = canvas.GetStringSize(text2);
         canvas.SetPosition(drawLoc2);
-        auto scale2 = cvarManager->getCvar("cl_speeddrill_display_session_timer_size").getFloatValue();
         canvas.DrawString(text2, scale2, scale2);
     }
 }
